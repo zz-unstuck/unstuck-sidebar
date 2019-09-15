@@ -4,19 +4,19 @@ import { number } from 'discourse/lib/formatter';
 
 createWidget('cat-category', {
   tagName: 'div.cat-link',
-  
+
   html(c) {
     if (c.parent_category_id) {
       this.tagName += '.subcategory';
     }
- 
+
     this.tagName += '.category-' + Discourse.Category.slugFor(c, '-');
 
     const results = [
       this.attach("category-link", { category: c, allowUncategorized: true })
-    ]; 
-    
-    
+    ];
+
+
      const unreadTotal =
       parseInt(c.get("unreadTopics"), 10) + parseInt(c.get("newTopics"), 10);
     if (unreadTotal) {
@@ -45,7 +45,7 @@ createWidget('cat-category', {
 
     return results;
 }
- 
+
 });
 
 export default createWidget('cat-categories', {
@@ -54,20 +54,20 @@ export default createWidget('cat-categories', {
   html(attrs) {
     let title = I18n.t("filters.categories.title");
     if (attrs.moreCount > 0) {
-     // title += I18n.t("categories.more", { count: attrs.moreCount });
+     title += I18n.t("categories.more", { count: attrs.moreCount });
     }
 
     let result = [  ];
-    
-    
+
+
     result = result.concat(
         h(
           "div.zag",
           h(
             "div.oglavl", title)
         )
-     ); 
- 
+     );
+
     const categories = attrs.categories;
     if (categories.length === 0) {
       return;

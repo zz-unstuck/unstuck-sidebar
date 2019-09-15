@@ -29,18 +29,18 @@ export default createWidget('sidebar-cat', {
 
     return results;
   },
- 
+
   listCategories() {
 
        const maxCategoriesToDisplay = this.siteSettings
             .header_dropdown_category_count;
-    
+
     let categories = this.site.get("categoriesByCount");
 
     if (this.currentUser) {
       const allCategories = this.site
         .get("categories")
-        .filter(c => !c.parent_category_id) // - subcategory
+        // .filter(c => !c.parent_category_id) // - subcategory
         .filter(c => c.notification_level !== NotificationLevels.MUTED);
 
       categories = allCategories
@@ -68,10 +68,10 @@ export default createWidget('sidebar-cat', {
           .sort((a, b) => b.topic_count - a.topic_count)
       );
     } else {
-	
+
 	   categories = categories
 	   .filter(c => !c.parent_category_id);
-	
+
   	}
 
     const moreCount = categories.length - maxCategoriesToDisplay;
@@ -79,11 +79,11 @@ export default createWidget('sidebar-cat', {
 
     var cslug = this.attrs.cslug;
     return this.attach("cat-categories", { categories, moreCount, cslug });
-},
+  },
 
   html() {
     if (this.site.mobileView)
-    return; 
+    return;
     return this.attach('cat-panel', { contents: () => this.panelContents() });
   },
 
